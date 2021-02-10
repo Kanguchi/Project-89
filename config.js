@@ -12,5 +12,6 @@ require('@firebase/firestore')
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+  var storage = firebase.storage();
 
 export default firebase.firestore();
