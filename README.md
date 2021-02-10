@@ -1,5 +1,4 @@
-<<<<<<< HEAD
 # Barter App
-project 86
-=======
+project 87 (Profile Picture Added)
+
 

@@ -23,7 +23,7 @@ export default class Exchange extends Component{
     return Math.random().toString(36).substring(7);
   }
 
-  addItem=(itemName, description)=>{
+  addItem=async(itemName, description)=>{
     var userName = this.state.userName
     var exchangeId = this.createUniqueId()
     db.collection("exchange_requests").add({
