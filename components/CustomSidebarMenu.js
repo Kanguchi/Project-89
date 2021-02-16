@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { DrawerItems} from 'react-navigation-drawer'
 import firebase from 'firebase';
 import db from '../config';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export default class CustomSidebarMenu extends Component{
   state={
@@ -65,21 +66,20 @@ export default class CustomSidebarMenu extends Component{
   render(){
     return(
       <View style={{flex:1}}>
-        <View style={{flex: 0.5, alignItems: 'center', backgroundColor: 'orange'}}>
+        <View style={{flex: 0.3,justifyContent:'center', alignItems: 'center', backgroundColor: 'orange', paddingTop: RFValue(50)}}>
           <Avatar
             rounded
             source={{
               uri: this.state.image,
             }}
-            size="medium"
+            size="xlarge"
             onPress={()=>{
               this.selectPicture();
               console.log(this.state.name);
             }}
-            containerStyle={styles.imageContainer}
             showEditButton
           />
-          <Text style={{fontWeight: "100", fontSize: 20, paddingTop: 10, color: 'black'}}>{this.state.name}</Text>
+          <Text style={{fontWeight: "300",fontSize: RFValue(20),color: "#fff",padding: RFValue(20),}}>{this.state.name}</Text>
         </View>
         <View style={styles.drawerItemsContainer}>
           <DrawerItems {...this.props}/>

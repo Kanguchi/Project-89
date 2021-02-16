@@ -1,4 +1,4 @@
 # Barter App
-project 88 (added the API)
+project 89 (Final Barter App)
 
 
