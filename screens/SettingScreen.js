@@ -13,6 +13,7 @@ export default class SettingScreen extends Component{
       lastName:'',
       address:'',
       contact:'',
+      currencyCode: '',
       docId:''
     }
   }
@@ -31,6 +32,7 @@ export default class SettingScreen extends Component{
          lastName:data.last_name,
          address:data.address,
          contact:data.mobile_number,
+         currencyCode:data.currency_code,
          docId:doc.id
        })
     });
@@ -46,6 +48,7 @@ export default class SettingScreen extends Component{
       last_name: this.state.lastName,
       address:this.state.address,
       contact:this.state.contact,
+      currency_code:this.state.currencyCode,
     })
 }
 
@@ -116,6 +119,16 @@ componentDidMount(){
                     })
                   }}
                     value ={this.state.emailId}
+                />
+                <TextInput
+                  style={styles.formTextInput}
+                  placeholder ={"Country currency code"}
+                  maxLength ={8}
+                  onChangeText={(text)=>{
+                    this.setState({
+                      currencyCode: text
+                    })
+                  }}
                 />
                 <TouchableOpacity style={styles.button}
                   onPress={()=>{this.updateData()}}>

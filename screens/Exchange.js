@@ -15,7 +15,9 @@ export default class Exchange extends Component{
       requestedItemName:"",
       exchangeId:"",
       itemStatus:"",
-      docId: ""
+      docId: "",
+      itemValue: '',
+      currencyCode: '',
     }
   }
 
@@ -30,16 +32,10 @@ export default class Exchange extends Component{
       "username"    : userName,
       "item_name"   : itemName,
       "description" : description,
-      "exchangeId"  : exchangeId
-     })
-     this.setState({
-       itemName : '',
-       description :''
-     })
-
-     this.setState({
-       itemName : '',
-       description :''
+      "exchangeId"  : exchangeId,
+      "item_status" : "requested",
+      "item_value" : this.state.itemValue,
+      "date" : firebase.firestore.FieldValue.serverTimestamp(),
      })
 
      await this.getExchangeRequest()
@@ -55,7 +51,8 @@ export default class Exchange extends Component{
 
      this.setState({
        itemName : '',
-       description :''
+       description :'',
+       itemValue: '',
      })
 
      return Alert.alert(
@@ -77,7 +74,8 @@ getIsExchangeRequestActive(){
       querySnapshot.forEach(doc => {
         this.setState({
           IsExchangeRequestActive:doc.data().IsExchangeRequestActive,
-          userDocId : doc.id
+          userDocId : doc.id,
+          currencyCode: doc.data().currency_code,
         })
       })
     })
@@ -96,17 +94,31 @@ getIsExchangeRequestActive(){
             exchangeId : doc.data().exchangeId,
             requestedItemName: doc.data().item_name,
             itemStatus:doc.data().item_status,
+            itemValue : doc.data().item_value,
             docId     : doc.id
           })
         }
       })
   })
 }
-
+  getData(){
+    fetch ("http://data.fixer.io/api/latest?access_key=8ce8eb2311315e7fb0c31c000b08efb8&format=1")
+      .then(response=>{
+        return response.json();
+      }) .then(responseData=>{
+        var currencyCode = this.state.currencyCode;
+        var currency = responseData.rates.INR;
+        var value = 69/currency;
+        console.log(value);
+        this.setState({
+          itemValue: value,
+        })
+      })
+  }
   componentDidMount(){
-    this.getExchangeRequest()
-    this.getIsExchangeRequestActive()
-
+    this.getExchangeRequest();
+    this.getIsExchangeRequestActive();
+    this.getData();
   }
 
 
@@ -180,8 +192,11 @@ getIsExchangeRequestActive(){
          <Text>{this.state.requestedItemName}</Text>
          </View>
          <View style={{borderColor:"orange",borderWidth:2,justifyContent:'center',alignItems:'center',padding:10,margin:10}}>
+         <Text> Item Value </Text>
+         <Text>{this.state.itemValue}</Text>
+         </View>
+         <View style={{borderColor:"orange",borderWidth:2,justifyContent:'center',alignItems:'center',padding:10,margin:10}}>
          <Text> Item Status </Text>
-
          <Text>{this.state.itemStatus}</Text>
          </View>
 

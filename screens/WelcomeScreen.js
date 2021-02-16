@@ -16,7 +16,8 @@ export default class WelcomeScreen extends Component {
       lastName : "",
       mobileNumber:"",
       address : "",
-      confirmPassword : ""
+      confirmPassword : "",
+      currencyCode: '',
     }
   }
 
@@ -43,7 +44,8 @@ export default class WelcomeScreen extends Component {
           last_name:this.state.lastName,
           mobile_number:this.state.mobileNumber,
           username:this.state.username,
-          address:this.state.address
+          address:this.state.address,
+          currency_code: this.state.currencyCode,
         })
         return  Alert.alert(
              'User Added Successfully',
@@ -141,6 +143,16 @@ export default class WelcomeScreen extends Component {
             onChangeText={(text)=>{
               this.setState({
                 confirmPassword: text
+              })
+            }}
+          />
+          <TextInput
+            style={styles.formTextInput}
+            placeholder ={"Country currency code"}
+            maxLength ={8}
+            onChangeText={(text)=>{
+              this.setState({
+                currencyCode: text
               })
             }}
           />
